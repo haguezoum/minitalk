@@ -41,7 +41,7 @@ int main(int ac, char *av[])
                 {
                     kill(pid, SIGUSR2);
                 }
-                usleep(200);
+                usleep(150);
             }
             msg++;
         }   
