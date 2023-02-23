@@ -65,7 +65,7 @@ void handler(int sig, siginfo_t *info , void *unsend)
 
 int main()
 {
-    printf("%d\n",getpid());
+    ft_printf("%d\n",getpid());
     struct sigaction sa;
     sa.sa_sigaction =  handler;
     sa.sa_flags = SA_SIGINFO | SA_RESTART;
