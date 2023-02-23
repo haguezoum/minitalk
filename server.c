@@ -48,26 +48,16 @@ void handler(int sig, siginfo_t *info , void *unsend)
     static unsigned char bits[8];
     static int byte ;
     static int senderPID;
-    static int i;
     
     if(senderPID != info->si_pid)
         byte = 0;
-
     senderPID = info->si_pid;
-
-    if(sig == SIGUSR1)
-    {    
+    if(sig == SIGUSR1)    
         bits[byte++] = '0';
-        i = i + 0;
-    }
     else
-    {
         bits[byte++] = '1';
-        i = i + 1;
-    } 
     if(byte == 4)
     {  
-
         byte = 0;
         ft_printf("%c",convert(bits));
     }
