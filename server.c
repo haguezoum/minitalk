@@ -56,7 +56,7 @@ void handler(int sig, siginfo_t *info , void *unsend)
         bits[byte++] = '0';
     else
         bits[byte++] = '1';
-    if(byte == 4)
+    if(byte == 8)
     {  
         byte = 0;
         ft_printf("%c",convert(bits));
