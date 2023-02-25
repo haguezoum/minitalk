@@ -42,12 +42,32 @@ int convert(unsigned char *str)
     return (sum);
 }
 
+int convert_b(unsigned char *str)
+{
+    int sum;
+    int i;
+    sum = 0;
+    i = 0;
+
+    while(str[i])
+    {       
+                                            
+        if(str[i] == '1' && i < 4)
+        {
+            sum = sum + power(7-i);
+        }
+        i++;
+    }
+    return (sum);
+}
 
 void handler(int sig, siginfo_t *info , void *unsend)
 {
     static unsigned char bits[8];
     static int byte ;
     static int senderPID;
+    static int x;
+    static char c = 0;
     
     if(senderPID != info->si_pid)
         byte = 0;
@@ -56,11 +76,32 @@ void handler(int sig, siginfo_t *info , void *unsend)
         bits[byte++] = '0';
     else
         bits[byte++] = '1';
-    if(byte == 8)
-    {  
-        byte = 0;
-        ft_printf("%c",convert(bits));
+
+    if(byte == 4)
+    {
+        if(convert_b(bits) == 240)
+            x = 4;
+        else if(convert_b(bits) == 224)
+           x = 3;
+        else if(convert_b(bits) == 192)
+           x = 2;
+        else
+            x = 1;
     }
+
+    // if(byte == 8)
+    // {  
+        // byte = 0;
+        c = convert(bits);
+        // while (x > 0)
+        // {
+            // str[x] = convert(bits);
+            // x--;
+        // }
+        // ft_printf("%c",convert(bits));
+        ft_putchar_fd(c, 1);
+        c = 0;
+    // }
 }
 
 int main()
