@@ -6,7 +6,7 @@
 /*   By: haguezou <haguezou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:30:07 by haguezou          #+#    #+#             */
-/*   Updated: 2023/02/26 18:02:01 by haguezou         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:09:55 by haguezou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,24 @@ void	handler(int sig, siginfo_t *info, void *unsend)
 {
 	static char		bits[32];
 	static int		byte ;
-	static int		senderPID;
+	static int		sender_pid;
 	static int		x;
 	static int		sum;
 
-	if (senderPID != info->si_pid)
-    {
+	(void)unsend;
+	if (sender_pid != info->si_pid)
+	{
 		byte = 0;
 		x = 0;
 		ft_bzero(bits, 31);
-		senderPID = info->si_pid;
+		sender_pid = info->si_pid;
 	}
 	bits[x] = (sig == SIGUSR2) + 48;
 	sum = (sum << 1) | (sig == SIGUSR2);
 	x++;
-	if	(x == 4)
+	if (x == 4)
 		byte_counter(&byte, sum);
-	if(x == (8 * byte))
+	if (x == (8 * byte))
 	{
 		print_char(bits, byte);
 		sum = 0;
@@ -78,14 +79,16 @@ void	handler(int sig, siginfo_t *info, void *unsend)
 	}
 }
 
-int	main()
+int	main(void)
 {
+	struct sigaction	sa;
+
 	ft_putnbr_fd(getpid(), 2);
-	struct sigaction sa;
-	sa.sa_sigaction =  handler;
+	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
-	sigaction(SIGUSR1,&sa,NULL);
-	sigaction(SIGUSR2,&sa,NULL);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 		pause();
+	return (0);
 }
