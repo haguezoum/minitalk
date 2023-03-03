@@ -6,7 +6,7 @@
 /*   By: haguezou <haguezou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 14:46:27 by haguezou          #+#    #+#             */
-/*   Updated: 2023/02/28 16:34:14 by haguezou         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:19:57 by haguezou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -30,8 +30,9 @@ int	main(int ac, char *av[])
 					kill(pid, SIGUSR1);
 				else
 					kill(pid, SIGUSR2);
-				usleep(150);
+				usleep(300);
 			}
+			usleep(150);
 			msg++;
 		}
 	}
